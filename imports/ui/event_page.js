@@ -6,13 +6,13 @@ import { Leagues } from '../api/leagues.js';
 
 import './event_page.html';
 
-function createHigh(eventData) {
+function createHigh() {
   $('#container').highcharts({
     chart: {
       type: 'bar'
     },
     title: {
-      text: eventData.avgPrice
+      text: 'Fruit Consumption'
     },
     xAxis: {
       categories: ['Apples', 'Bananas', 'Oranges']
@@ -38,29 +38,18 @@ function createHigh(eventData) {
 
 Template.eventPage.onCreated(function() {
 
-
   var self = this;
   self.autorun(function() {
-    var postId = FlowRouter.getParam('postId');
-    self.subscribe('sportingEvents');
-
-  //   var eventData = SportingEvents.find({}).count()
-		// console.log(eventData)  
+    var eventId = FlowRouter.getParam('id');
+    self.subscribe('singleEvent', eventId, function() {
+         var eventData = SportingEvents.find({}).count()
+        console.log(eventData)
+        createHigh()
+    });  
   });
-
 
 });
 
-Template.eventPage.rendered = function() {  
-    this.autorun(function () {  
-    	var eventId = FlowRouter.getParam("id");
-		var eventData = SportingEvents.findOne({})
-
-		console.log(eventData)
-       createHigh(eventData);
-
-})
-}
 
 
 Template.eventPage.helpers({

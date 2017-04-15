@@ -7,4 +7,8 @@ if (Meteor.isServer) {
   Meteor.publish('sportingEvents', function sportingEventsPublication() {
     return SportingEvents.find();
   });
+  Meteor.publish('singleEvent', function(id) {
+	return SportingEvents.find(id)
+});
+
 }
