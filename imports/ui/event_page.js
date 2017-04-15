@@ -6,31 +6,46 @@ import { Leagues } from '../api/leagues.js';
 
 import './event_page.html';
 
-function createHigh() {
+function createHigh(graphData, timeTest) {
   $('#container').highcharts({
     chart: {
-      type: 'bar'
+        type: 'spline'
     },
     title: {
-      text: 'Fruit Consumption'
+        text: 'Snow depth at Vikjafjellet, Norway'
+    },
+    subtitle: {
+        text: 'Irregular time data in Highcharts JS'
     },
     xAxis: {
-      categories: ['Apples', 'Bananas', 'Oranges']
+      type: 'datetime',
+        dateTimeLabelFormats: { // don't display the dummy year
+            month: '%e. %b',
+            year: '%b'
+        },
+        title: {
+            text: 'Date'
+        }
     },
     yAxis: {
-      title: {
-        text: 'Fruit eaten'
-      },
+        title: {
+            text: 'Snow depth (m)'
+        },
+        min: 0
     },
-    series: [
-      {
-        name: 'Jane',
-        data: [1, 0, 4]
-      }, {
-        name: 'John',
-        data: [5, 7, 3]
-      }
-    ]
+
+    plotOptions: {
+        spline: {
+            marker: {
+                enabled: true
+            }
+        }
+    },
+
+    series: [{
+        data: graphData,
+  
+    }]
   });
 }
 
@@ -42,9 +57,11 @@ Template.eventPage.onCreated(function() {
   self.autorun(function() {
     var eventId = FlowRouter.getParam('id');
     self.subscribe('singleEvent', eventId, function() {
-         var eventData = SportingEvents.find({}).count()
-        console.log(eventData)
-        createHigh()
+         var eventData = SportingEvents.findOne({})
+         var timeTest = eventData.datetimeLocal.toUTCString()
+        console.log(timeTest)
+        var graphData = [[eventData.prices[0].priceTime.toUTCString(), eventData.prices[0].minPrice], [eventData.prices[1].priceTime.toUTCString(), eventData.prices[1].minPrice], [eventData.prices[2].priceTime.toUTCString(), eventData.prices[2].minPrice]]
+        createHigh(graphData, timeTest)
     });  
   });
 
