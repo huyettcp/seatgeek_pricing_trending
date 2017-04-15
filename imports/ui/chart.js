@@ -15,7 +15,7 @@ Template.Chart.onRendered(function() {
 function createHigh() {
   $('#container').highcharts({
     chart: {
-      type: 'bar'
+      type: 'line'
     },
     title: {
       text: 'Fruit Consumption'

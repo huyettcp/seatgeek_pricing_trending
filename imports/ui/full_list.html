@@ -1,0 +1,25 @@
+<template name="fullList">
+		       		<div class="ui grid container">
+		<div class="row">
+			  </div>
+			  <div class="row">
+			        <div class="twelve wide column">
+			        	<h1>Full List</h1>
+    <div class="ui relaxed divided list">
+    	      {{#each sportingEvents}}
+        {{> sportingEvent}}
+      {{/each}}
+
+</div>
+</div>
+  <div class="four wide column">
+    <ul>
+      {{#each teams}}
+        {{> team}}
+      {{/each}}
+    </ul>
+
+  </div>
+    </div>
+</div>
+</template>

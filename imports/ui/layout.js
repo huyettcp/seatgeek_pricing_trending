@@ -5,18 +5,17 @@ import { Leagues } from '../api/leagues.js';
  
 import './body.html';
 import './layout.html';
-import './chart.html';
-import './team.html';
-import './layout.js';
-
-import './sportingEvent.html';
-import './full_list.html'
+import './full_list.html';
+import './full_list.js';
+import './event_page.html';
+import './event_page.js';
  
-Template.body.onCreated(function() {
 
-});
-
-
-Template.body.helpers({
-
+Template.layout.helpers({
+	teams() {
+		return Teams.find({})
+	},
+	sportingEvents() {
+		return SportingEvents.find({})
+	}
 });
