@@ -6,7 +6,7 @@ import { Leagues } from '../api/leagues.js';
 
 import './event_page.html';
 
-function createHigh(graphData, timeTest) {
+function createHigh(avgData, minData, maxData ) {
   $('#container').highcharts({
     chart: {
         type: 'spline'
@@ -43,9 +43,19 @@ function createHigh(graphData, timeTest) {
     },
 
     series: [{
-        data: graphData,
+        name: "Average Price",
+        data: avgData
   
-    }]
+    }, {
+        name: "Minimum Price",
+        data: minData
+    }, {
+        name: "Maximum Price",
+        data: maxData
+    }, 
+
+
+    ]
   });
 }
 
@@ -57,11 +67,26 @@ Template.eventPage.onCreated(function() {
   self.autorun(function() {
     var eventId = FlowRouter.getParam('id');
     self.subscribe('singleEvent', eventId, function() {
-         var eventData = SportingEvents.findOne({})
-         var timeTest = eventData.datetimeLocal.toUTCString()
-        console.log(timeTest)
-        var graphData = [[eventData.prices[0].priceTime.toUTCString(), eventData.prices[0].minPrice], [eventData.prices[1].priceTime.toUTCString(), eventData.prices[1].minPrice], [eventData.prices[2].priceTime.toUTCString(), eventData.prices[2].minPrice]]
-        createHigh(graphData, timeTest)
+        var eventData = SportingEvents.findOne({})
+
+        var avgData = []
+        var minData = []
+        var maxData = []
+
+        var counter = eventData.priceCount
+        for(var i=0;i<counter;i++){
+            var avgPrice = eventData.prices[i].avgPrice
+            var minPrice = eventData.prices[i].minPrice
+            var maxPrice = eventData.prices[i].maxPrice
+            var priceTime = eventData.prices[i].priceTime
+            avgData.push([eventData.prices[i].priceTime.toUTCString(), avgPrice])
+            minData.push([eventData.prices[i].priceTime.toUTCString(), minPrice])
+            maxData.push([eventData.prices[i].priceTime.toUTCString(), maxPrice])
+            
+        }
+
+        console.log(avgData, minData, maxData)
+        createHigh(avgData, minData, maxData)
     });  
   });
 
