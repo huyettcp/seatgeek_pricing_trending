@@ -8,9 +8,14 @@ import './team.html';
 import './sportingEvent.html';
 
 Template.fullList.onCreated(function() {
-	Meteor.subscribe('sportingEvents');
-	Meteor.subscribe('teams');
-	Meteor.subscribe('leagues');
+
+var self = this;
+self.autorun(function() {
+self.subscribe('sportingEvents');  
+self.subscribe('teams');
+self.subscribe('leagues');
+});
+
 });
 
 
