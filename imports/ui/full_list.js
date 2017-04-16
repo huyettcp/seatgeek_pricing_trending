@@ -24,6 +24,14 @@ Template.fullList.helpers({
 		return Teams.find({})
 	},
 	sportingEvents() {
-		return SportingEvents.find({})
+		return SportingEvents.find({}, {limit: 20})
 	}
 });
+
+Template.fullList.events({
+	'click .ui .item': function() {
+		 $('.ui .item').removeClass('active');
+  		 $(this).addClass('active');
+	}
+});
+

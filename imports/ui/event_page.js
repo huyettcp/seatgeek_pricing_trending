@@ -6,30 +6,29 @@ import { Leagues } from '../api/leagues.js';
 
 import './event_page.html';
 
-function createHigh(avgData, minData, maxData ) {
+function createHigh(avgData, minData, maxData, title, venue) {
   $('#container').highcharts({
+ 
     chart: {
         type: 'spline'
     },
     title: {
-        text: 'Snow depth at Vikjafjellet, Norway'
+        text: ""
     },
-    subtitle: {
-        text: 'Irregular time data in Highcharts JS'
-    },
-    xAxis: {
-      type: 'datetime',
-        dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
-            year: '%b'
-        },
-        title: {
-            text: 'Date'
+    // subtitle: {
+    //     text: "Click "
+    // },
+  xAxis: {
+  type: 'datetime',
+   dateTimeLabelFormats: {
+           day: '%b %d',
+           hour: '%I:%M %P'    //ex- 01 Jan 2016
         }
+
     },
     yAxis: {
         title: {
-            text: 'Snow depth (m)'
+            text: 'Cost ($)'
         },
         min: 0
     },
@@ -37,21 +36,30 @@ function createHigh(avgData, minData, maxData ) {
     plotOptions: {
         spline: {
             marker: {
-                enabled: true
+                enabled: false
             }
         }
     },
+    tooltip: {
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '{point.x: %b %d, %I:%M %P}: ${point.y:.2f}'
+    },
+
 
     series: [{
         name: "Average Price",
-        data: avgData
+        data: avgData,
+        color: "#21ba45"
   
     }, {
         name: "Minimum Price",
-        data: minData
+        data: minData,
+        color: "#f2711c"
     }, {
         name: "Maximum Price",
-        data: maxData
+        data: maxData,
+        color: "#2185d0"
+
     }, 
 
 
@@ -66,9 +74,13 @@ Template.eventPage.onCreated(function() {
   var self = this;
   self.autorun(function() {
     var eventId = FlowRouter.getParam('id');
+
     self.subscribe('singleEvent', eventId, function() {
         var eventData = SportingEvents.findOne({})
 
+        var title = eventData.title
+        var venue = eventData.venue
+        
         var avgData = []
         var minData = []
         var maxData = []
@@ -79,14 +91,14 @@ Template.eventPage.onCreated(function() {
             var minPrice = eventData.prices[i].minPrice
             var maxPrice = eventData.prices[i].maxPrice
             var priceTime = eventData.prices[i].priceTime
-            avgData.push([eventData.prices[i].priceTime.toUTCString(), avgPrice])
-            minData.push([eventData.prices[i].priceTime.toUTCString(), minPrice])
-            maxData.push([eventData.prices[i].priceTime.toUTCString(), maxPrice])
-            
+            var priceTimeToUTC = Date.parse(priceTime);
+            avgData.push([priceTimeToUTC, avgPrice])
+            minData.push([priceTimeToUTC, minPrice])
+            maxData.push([priceTimeToUTC, maxPrice])
+
         }
 
-        console.log(avgData, minData, maxData)
-        createHigh(avgData, minData, maxData)
+        createHigh(avgData, minData, maxData, title, venue)
     });  
   });
 
@@ -96,7 +108,7 @@ Template.eventPage.onCreated(function() {
 
 Template.eventPage.helpers({
 	sportingEvent() {
-		var eventData = SportingEvents.find({}).count()
-		return eventData
+		var sportingEvent = SportingEvents.findOne({})
+		return sportingEvent
 	}
 });

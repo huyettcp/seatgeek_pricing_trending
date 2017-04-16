@@ -2,7 +2,7 @@ import {Teams} from '../imports/api/teams.js';
 import {SportingEvents} from '../imports/api/sportingEvents.js';
 import {Leagues} from '../imports/api/leagues.js';
 
-var updateSchedule = later.parse.text('every 2 minutes');
+var updateSchedule = later.parse.text('every 15 minutes');
 var priceUpdater = new ScheduledTask(updateSchedule, updatePrices);
 
 

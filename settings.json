@@ -1,0 +1,9 @@
+{
+  "galaxy.meteor.com": {
+     "env": {
+       "MONGO_URL": "mongodb://huyettcp:Niveatab20@ds161410.mlab.com:61410/seatgeek_pricing_trending"
+     }
+   }
+}
+
+

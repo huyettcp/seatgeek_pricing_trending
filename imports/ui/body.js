@@ -5,7 +5,6 @@ import { Leagues } from '../api/leagues.js';
  
 import './body.html';
 import './layout.html';
-import './chart.html';
 import './team.html';
 import './layout.js';
 

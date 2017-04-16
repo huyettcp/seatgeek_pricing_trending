@@ -1,11 +1,16 @@
 <template name="fullList">
 		       		<div class="ui grid container">
-		<div class="row">
-			  </div>
 			  {{#if Template.subscriptionsReady}}
 			  <div class="row">
 			        <div class="twelve wide column">
-			        	<h1>Full List</h1>
+<!-- <div class="ui menu">
+  <a class="red item active">Red</a>
+  <a class="orange item">Orange</a>
+  <a class="yellow item">Yellow</a>
+  <a class="olive item">Olive</a>
+  <a class="green item">Green</a>
+  <a class="teal item">Teal</a>
+</div> -->
     <div class="ui relaxed divided list">
     	      {{#each sportingEvents}}
         {{> sportingEvent}}
