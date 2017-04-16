@@ -76,8 +76,9 @@ Template.eventPage.onCreated(function() {
     var eventId = FlowRouter.getParam('id');
 
     self.subscribe('singleEvent', eventId, function() {
-        var eventData = SportingEvents.findOne({})
 
+        var eventData = SportingEvents.findOne({})
+     console.log(eventData.visibleUntilUtc)
         var title = eventData.title
         var venue = eventData.venue
         
