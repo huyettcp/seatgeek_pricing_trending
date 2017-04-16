@@ -2,7 +2,7 @@ import {Teams} from '../imports/api/teams.js';
 import {SportingEvents} from '../imports/api/sportingEvents.js';
 import {Leagues} from '../imports/api/leagues.js';
 
-var updateSchedule = later.parse.text('every 1 minutes');
+var updateSchedule = later.parse.text('every 15 minutes');
 var priceUpdater = new ScheduledTask(updateSchedule, updatePrices);
 
 
@@ -21,7 +21,7 @@ function updatePrices (argument) {
 
   	sportingEvents.forEach(function(sportingEvent){
   	var seatGeekId = sportingEvent.seatGeekId
-  	console.log(seatGeekId)
+  	
   	HTTP.call( 'GET', 'http://api.seatgeek.com/2/events/' + seatGeekId +'?client_id=Mjc0MzYwNHwxNDU1OTg0MTEz', {}, function( error, response ) {
   		if ( error ) {
     		SportingEvents.remove(sportingEvent._id)
@@ -57,7 +57,7 @@ function updatePrices (argument) {
 
 priceUpdater.start();
 
-var insertEventSchedule = later.parse.text('every 1 hours');
+var insertEventSchedule = later.parse.text('every 2 hours');
 var eventUpdater = new ScheduledTask(insertEventSchedule, insertEvents)
 
 function insertEvents (argument) {
@@ -90,6 +90,7 @@ function insertEvents (argument) {
 		var datetimeLocal = new Date(datetimeLocal)
 		var url = result.data.events[counter].url
 		var venueUrl = result.data.events[counter].venue.url
+
 
 
 

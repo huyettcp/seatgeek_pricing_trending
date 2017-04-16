@@ -1,7 +1,7 @@
 <template name="fullList">
 			  {{#if Template.subscriptionsReady}}
         <div class="row">
-          <div class="twelve wide column">
+          <div class="ten wide column">
 <div class="ui inverted menu">
   {{#each leagues}}
     {{> league}}
@@ -10,7 +10,7 @@
           </div>
         </div>
 			  <div class="row">
-			        <div class="twelve wide column">
+			        <div class="ten wide column">
 
     <div class="ui relaxed divided list">
     	      {{#each sportingEvents}}
@@ -19,12 +19,25 @@
 
 </div>
 </div>
-  <div class="four wide column">
-    <ul>
-      {{#each teams}}
+  <div class="six wide column">
+<!-- <div class="ui compact vertical text menu">
+  {{#each teams}}
         {{> team}}
       {{/each}}
-    </ul>
+</div> -->
+<div class="ui text vertical menu">
+  <div class="item">
+    {{#if showTeamMenu}}
+    <div class="header">Select Team</div>
+    <div class="menu">
+        {{#each teams}}
+          {{> team}}
+        {{/each}}
+    </div>
+    {{/if}}
+  </div>
+</div>
+
 
   </div>
 
