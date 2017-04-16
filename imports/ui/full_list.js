@@ -6,9 +6,11 @@ import { Leagues } from '../api/leagues.js';
 
 import './team.html';
 import './sportingEvent.html';
+import './league.html';
+import './league.js';
 
 Template.fullList.onCreated(function() {
-
+Session.set('leagueSelected', 'ALL')
 var self = this;
 self.autorun(function() {
 self.subscribe('sportingEvents');  
@@ -24,14 +26,21 @@ Template.fullList.helpers({
 		return Teams.find({})
 	},
 	sportingEvents() {
-		return SportingEvents.find({}, {limit: 20})
+		var leagueSelected = Session.get('leagueSelected')
+		if (leagueSelected !== 'ALL') {
+			return SportingEvents.find({league: leagueSelected}, {limit: 20})
+		} else {
+			return SportingEvents.find({}, {limit: 20})
+		}
+	},
+	leagues() {
+		return Leagues.find({})
 	}
 });
 
 Template.fullList.events({
-	'click .ui .item': function() {
-		 $('.ui .item').removeClass('active');
-  		 $(this).addClass('active');
+	'click .league_button': function() {
+		Session.set('leagueSelected', this.league)
 	}
 });
 

@@ -44,9 +44,22 @@ function createHigh(avgData, minData, maxData, title, venue) {
         headerFormat: '<b>{series.name}</b><br>',
         pointFormat: '{point.x: %b %d, %I:%M %P}: ${point.y:.2f}'
     },
+          legend: {
+            align: 'left',
+            verticalAlign: 'top',
+        
+        },
 
 
-    series: [{
+    series: [
+    {
+        name: "Maximum Price",
+        data: maxData,
+        color: "#2185d0",
+        visible: false
+
+    }, 
+    {
         name: "Average Price",
         data: avgData,
         color: "#21ba45"
@@ -55,11 +68,6 @@ function createHigh(avgData, minData, maxData, title, venue) {
         name: "Minimum Price",
         data: minData,
         color: "#f2711c"
-    }, {
-        name: "Maximum Price",
-        data: maxData,
-        color: "#2185d0"
-
     }, 
 
 

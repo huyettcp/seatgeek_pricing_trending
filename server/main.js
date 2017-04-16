@@ -2,7 +2,7 @@ import {Teams} from '../imports/api/teams.js';
 import {SportingEvents} from '../imports/api/sportingEvents.js';
 import {Leagues} from '../imports/api/leagues.js';
 
-var updateSchedule = later.parse.text('every 15 minutes');
+var updateSchedule = later.parse.text('every 1 minutes');
 var priceUpdater = new ScheduledTask(updateSchedule, updatePrices);
 
 
@@ -29,6 +29,7 @@ function updatePrices (argument) {
     		var avgPrice = response.data.stats.average_price
 			var minPrice = response.data.stats.lowest_price
 			var maxPrice = response.data.stats.highest_price
+			if (isNaN(parseInt(avgPrice)) === false) {
 			SportingEvents.update(sportingEvent._id, {
 					$set: {
 						avgPrice: avgPrice,
@@ -44,6 +45,10 @@ function updatePrices (argument) {
       					priceCount: 1
       				}
       			})
+			} else {
+				SportingEvents.remove(sportingEvent._id)
+			}
+
 			}
 		});
 
@@ -52,11 +57,11 @@ function updatePrices (argument) {
 
 priceUpdater.start();
 
-var insertEventSchedule = later.parse.text('every 3 hours');
+var insertEventSchedule = later.parse.text('every 1 hours');
 var eventUpdater = new ScheduledTask(insertEventSchedule, insertEvents)
 
 function insertEvents (argument) {
-	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=750&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
+	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=2000&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
 	var numberOfEvents = result.data.meta.per_page
 
 	for (counter=0; counter<numberOfEvents; counter++) {
