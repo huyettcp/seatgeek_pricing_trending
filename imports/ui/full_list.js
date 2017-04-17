@@ -39,9 +39,9 @@ Template.fullList.helpers({
 		if (leagueSelected !== 'ALL' && teamSelected !== false) {
 			return SportingEvents.find({league: leagueSelected, teams: {$in: [teamSelected]}})
 		} else if (leagueSelected !== 'ALL' && teamSelected === false) {
-			return SportingEvents.find({league: leagueSelected})
+			return SportingEvents.find({league: leagueSelected}, {limit: 10})
 		} else {
-			return SportingEvents.find({}, {limit: 20})
+			return SportingEvents.find({}, {limit: 10})
 		}
 	},
 	leagues() {
