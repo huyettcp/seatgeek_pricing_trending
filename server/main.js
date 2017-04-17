@@ -61,7 +61,7 @@ var insertEventSchedule = later.parse.text('every 2 hours');
 var eventUpdater = new ScheduledTask(insertEventSchedule, insertEvents)
 
 function insertEvents (argument) {
-	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=2000&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
+	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=5000&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
 	var numberOfEvents = result.data.meta.per_page
 
 	for (counter=0; counter<numberOfEvents; counter++) {

@@ -6,6 +6,50 @@ import { Leagues } from '../api/leagues.js';
 
 import './event_page.html';
 
+
+Template.eventPage.onCreated(function() {
+
+  var self = this;
+  self.autorun(function() {
+    var eventId = FlowRouter.getParam('id');
+
+    self.subscribe('singleEvent', eventId, function() {
+
+        var eventData = SportingEvents.findOne({})
+        var title = eventData.title
+        var venue = eventData.venue
+        
+        var avgData = []
+        var minData = []
+        var maxData = []
+
+        var counter = eventData.priceCount
+        for(var i=0;i<counter;i++){
+            var avgPrice = eventData.prices[i].avgPrice
+            var minPrice = eventData.prices[i].minPrice
+            var maxPrice = eventData.prices[i].maxPrice
+            var priceTime = eventData.prices[i].priceTime
+            var priceTimeToUTC = Date.parse(priceTime);
+            avgData.push([priceTimeToUTC, avgPrice])
+            minData.push([priceTimeToUTC, minPrice])
+            maxData.push([priceTimeToUTC, maxPrice])
+
+        }
+
+        createHigh(avgData, minData, maxData, title, venue)
+    });  
+  });
+
+});
+
+Template.eventPage.helpers({
+    sportingEvent() {
+        var sportingEvent = SportingEvents.findOne({})
+        return sportingEvent
+    }
+});
+
+
 function createHigh(avgData, minData, maxData, title, venue) {
   $('#container').highcharts({
  
@@ -19,10 +63,13 @@ function createHigh(avgData, minData, maxData, title, venue) {
     //     text: "Click "
     // },
   xAxis: {
+        title: {
+            text: 'Time (UTC)'
+        },
   type: 'datetime',
    dateTimeLabelFormats: {
-           day: '%b %d',
-           hour: '%I:%M %P'    //ex- 01 Jan 2016
+           day: '%b %d'
+              //ex- 01 Jan 2016
         }
 
     },
@@ -77,47 +124,5 @@ function createHigh(avgData, minData, maxData, title, venue) {
 
 
 
-Template.eventPage.onCreated(function() {
-
-  var self = this;
-  self.autorun(function() {
-    var eventId = FlowRouter.getParam('id');
-
-    self.subscribe('singleEvent', eventId, function() {
-
-        var eventData = SportingEvents.findOne({})
-     console.log(eventData.visibleUntilUtc)
-        var title = eventData.title
-        var venue = eventData.venue
-        
-        var avgData = []
-        var minData = []
-        var maxData = []
-
-        var counter = eventData.priceCount
-        for(var i=0;i<counter;i++){
-            var avgPrice = eventData.prices[i].avgPrice
-            var minPrice = eventData.prices[i].minPrice
-            var maxPrice = eventData.prices[i].maxPrice
-            var priceTime = eventData.prices[i].priceTime
-            var priceTimeToUTC = Date.parse(priceTime);
-            avgData.push([priceTimeToUTC, avgPrice])
-            minData.push([priceTimeToUTC, minPrice])
-            maxData.push([priceTimeToUTC, maxPrice])
-
-        }
-
-        createHigh(avgData, minData, maxData, title, venue)
-    });  
-  });
-
-});
 
 
-
-Template.eventPage.helpers({
-	sportingEvent() {
-		var sportingEvent = SportingEvents.findOne({})
-		return sportingEvent
-	}
-});

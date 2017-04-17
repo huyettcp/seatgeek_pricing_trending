@@ -1,9 +1,13 @@
 <template name="eventPage">
 	<div class="row">
+    {{#if Template.subscriptionsReady}}
 	<div class="sixteen wide column"> <div class="ui medium header">{{sportingEvent.shortTitle}} - {{sportingEvent.datetimeLocal}}</div></div>
+  {{/if}}
 	</div>
 		<div class="row">
+
 	  <div class="three wide column">
+       {{#if Template.subscriptionsReady}}
 	  	<div class="ui list">
   <a class="item" href="{{sportingEvent.url}}" target="_blank">View on SeatGeek</a>
 </div>
@@ -41,7 +45,19 @@
     </div>
   </div>
 </div>
+{{else}}
+<div class="row">
+      <div class="row">
+        </div>
+        <div class="row">
+        </div>
+<div class="ten wide column">
+  <div class="ui active large inline loader"></div>
+  <div class="ui medium grey header">Loading...</div>
 
+</div>
+</div>
+{{/if}}
 	  </div>
 
 	  			  <div class="thirteen wide column">
