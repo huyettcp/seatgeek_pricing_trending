@@ -7,7 +7,7 @@ var updateSchedule = later.parse.text('every 30 minutes');
 var priceUpdater = new ScheduledTask(updateSchedule, updatePrices);
 
 function updatePrices (argument) {
-	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=3000&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
+	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=750&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
 	var numberOfEvents = result.data.meta.per_page
 
 	for (counter=0; counter<numberOfEvents; counter++) {
@@ -40,8 +40,7 @@ function updatePrices (argument) {
 
 				})
 			} else {
-				console.log("deleting")
-				console.log("sportingEvent._id")
+	
 				SportingEvents.remove(sportingEvent._id)
 			}
 		} else {
@@ -126,6 +125,17 @@ function updatePrices (argument) {
 			
 		}
  	}
+ 	
+ 	var now = new Date()
+ 	var oldEventsToDelete = SportingEvents.find({visibleUntilUtc: {$lt: now}}).fetch()
+ 		
+ 	oldEventsToDelete.forEach(function(oldSportingEvent){
+		SportingEvents.remove(oldSportingEvent._id)
+
+	})
+
+
+
 }
 
 

@@ -1,13 +1,20 @@
 <template name="eventPage">
 	<div class="row">
     {{#if Template.subscriptionsReady}}
-	<div class="sixteen wide column"> <div class="ui medium header">{{sportingEvent.shortTitle}} - {{sportingEvent.datetimeLocal}}</div></div>
-  {{/if}}
-	</div>
+	<div class="sixteen wide column">
+    <h3 class="ui header">
+  {{sportingEvent.shortTitle}}
+  <div class="sub header">{{sportingEvent.datetimeLocal}}</div>
+</h3>
+</div>
+{{/if}}
+</div>
+
 		<div class="row">
 
 	  <div class="three wide column">
        {{#if Template.subscriptionsReady}}
+
 	  	<div class="ui list">
   <a class="item" href="{{sportingEvent.url}}" target="_blank">View on SeatGeek</a>
 </div>
@@ -26,20 +33,20 @@
     <div class="item">
       <div class="content">
 
-             <div class="ui blue tiny header">Current Max</div>
+             <div class="ui orange tiny header">Current Max</div>
          ${{sportingEvent.maxPrice}}
       </div>
     </div>
     <div class="item">
       <div class="content">
-      	        <div class="ui green tiny header">Current Avg</div>
+      	        <div class="ui blue tiny header">Current Avg</div>
         	${{sportingEvent.avgPrice}}
       </div>
  
     </div>
     <div class="item">
       <div class="content">
-       <div class="ui orange tiny header">Current Min</div>
+       <div class="ui green tiny header">Current Min</div>
         ${{sportingEvent.minPrice}}
       </div>
     </div>
@@ -51,7 +58,7 @@
         </div>
         <div class="row">
         </div>
-<div class="ten wide column">
+<div class="three wide column">
   <div class="ui active large inline loader"></div>
   <div class="ui medium grey header">Loading...</div>
 

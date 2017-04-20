@@ -102,19 +102,19 @@ function createHigh(avgData, minData, maxData, title, venue) {
     {
         name: "Maximum Price",
         data: maxData,
-        color: "#2185d0",
+        color: "#f2711c",
         visible: false
 
     }, 
     {
         name: "Average Price",
         data: avgData,
-        color: "#21ba45"
+        color: "#2185d0" 
   
     }, {
         name: "Minimum Price",
         data: minData,
-        color: "#f2711c"
+        color: "#21ba45" 
     }, 
 
 

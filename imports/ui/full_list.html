@@ -25,18 +25,28 @@
         {{> team}}
       {{/each}}
 </div> -->
-<div class="ui text vertical menu">
-  <div class="item">
+
     {{#if showTeamMenu}}
+    <div class="ui text vertical menu">
+  <div class="item">
     <div class="header">Select Team</div>
     <div class="menu">
         {{#each teams}}
           {{> team}}
         {{/each}}
     </div>
-    {{/if}}
-  </div>
+      </div>
 </div>
+
+    {{else}}
+        <div class="ui secondary segment">
+      <h4 class="ui header">About</h4>
+  <p>This is a side project built by me, Chip Huyett. </p>
+    <p>It uses the <a href="http://platform.seatgeek.com/" target="_blank">SeatGeek API</a> to track the minimum, average, and maximum ticket prices for upcoming MLB, NBA, and NHL, updating the prices every half hour.</p>
+<p> In addition to the API, this was built with <a href="https://www.meteor.com/" target="_blank">Meteor.js</a>, <a href="http://www.highcharts.com/" target="_blank">Highcharts.js</a>, and <a href="https://semantic-ui.com/" target="_blank">Semantic.UI</a>.</p>
+</div>
+
+    {{/if}}
 
 
   </div>
