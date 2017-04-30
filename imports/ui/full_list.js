@@ -13,7 +13,7 @@ import './team.js';
 Template.fullList.onCreated(function() {
 Session.set('leagueSelected', 'ALL')
 Session.set('teamSelected', false)
-Session.set('eventLimit', 10)
+Session.set('eventLimit', 15)
 
 var self = this;
 self.autorun(function() {
@@ -63,7 +63,7 @@ Template.fullList.events({
 	'click .league_button': function() {
 		Session.set('leagueSelected', this.league)
 		Session.set('teamSelected', false)
-		Session.set('eventLimit', 50)
+		Session.set('eventLimit', 15)
 	},
 	'click .team_button': function() {
 		Session.set('teamSelected', this.teamName)
