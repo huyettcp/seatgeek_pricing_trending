@@ -7,7 +7,7 @@ var updateSchedule = later.parse.text('every 30 minutes');
 var priceUpdater = new ScheduledTask(updateSchedule, updatePrices);
 
 function updatePrices (argument) {
-	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=750&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
+	var result = HTTP.get('https://api.seatgeek.com/2/events?taxonomies.name=sports&per_page=400&client_id=Mjc0MzYwNHwxNDU1OTg0MTEz')
 	var numberOfEvents = result.data.meta.per_page
 
 	for (counter=0; counter<numberOfEvents; counter++) {

@@ -13,9 +13,13 @@ import './team.js';
 Template.fullList.onCreated(function() {
 Session.set('leagueSelected', 'ALL')
 Session.set('teamSelected', false)
+Session.set('eventLimit', 10)
+
 var self = this;
 self.autorun(function() {
-self.subscribe('sportingEvents');  
+	var eventLimit = Session.get('eventLimit')
+	var league = Session.get('leagueSelected')
+self.subscribe('sportingEvents', eventLimit, league);  
 self.subscribe('teams');
 self.subscribe('leagues');
 });
@@ -39,9 +43,9 @@ Template.fullList.helpers({
 		if (leagueSelected !== 'ALL' && teamSelected !== false) {
 			return SportingEvents.find({league: leagueSelected, teams: {$in: [teamSelected]}})
 		} else if (leagueSelected !== 'ALL' && teamSelected === false) {
-			return SportingEvents.find({league: leagueSelected}, {limit: 10})
+			return SportingEvents.find({league: leagueSelected})
 		} else {
-			return SportingEvents.find({}, {limit: 10})
+			return SportingEvents.find({})
 		}
 	},
 	leagues() {
@@ -59,6 +63,7 @@ Template.fullList.events({
 	'click .league_button': function() {
 		Session.set('leagueSelected', this.league)
 		Session.set('teamSelected', false)
+		Session.set('eventLimit', 50)
 	},
 	'click .team_button': function() {
 		Session.set('teamSelected', this.teamName)
