@@ -92,7 +92,7 @@ function updatePrices (argument) {
 			}
 
 			if (avgIsNumber && minIsNumber && maxIsNumber  && homeTeam != null && awayTeam != null && (league === "NBA" || league === "NHL" || league === "MLB")) {
-				console.log("adding" + seatGeekId)
+
 			SportingEvents.insert({
 	
 				seatGeekId: seatGeekId,

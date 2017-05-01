@@ -56,7 +56,31 @@ Template.fullList.helpers({
 		if (leagueSelected !== 'ALL') {
 			return true
 		}
-	}
+	},
+	dummyMenuAllActive() {
+		var leagueSelected = Session.get('leagueSelected')
+		if (leagueSelected == "ALL") {
+			return "active"
+		}
+	},
+	dummyMenuMlbActive() {
+		var leagueSelected = Session.get('leagueSelected')
+		if (leagueSelected == "MLB") {
+			return "active"
+		}
+	},
+	dummyMenuNbaActive() {
+		var leagueSelected = Session.get('leagueSelected')
+		if (leagueSelected == "NBA") {
+			return "active"
+		}
+	},
+	dummyMenuNhlActive() {
+		var leagueSelected = Session.get('leagueSelected')
+		if (leagueSelected == "NHL") {
+			return "active"
+		}
+	},
 });
 
 Template.fullList.events({
